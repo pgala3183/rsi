@@ -1,0 +1,75 @@
+==============================================================================
+LAB 10.10 | Leader-follower coordination with conditional memory
+source: AReaL-RSI, arXiv:2610.18083
+==============================================================================
+
+------------------------------------------------------------------------------
+1. Orientations the leader can assign
+------------------------------------------------------------------------------
+  peak       templates=['peak_cover', 'hold_for_peak', 'peak_dump']  targets symptoms=['uncovered_peak', 'early_discharge']
+  solar      templates=['store_surplus', 'hold_for_peak']  targets symptoms=['wasted_solar']
+  arbitrage  templates=['cheap_charge', 'cloudy_charge', 'need_charge', 'cheap_now']  targets symptoms=['missed_grid_charge', 'excess_grid_charge']
+  events     templates=['spike_dump', 'peak_dump']  targets symptoms=['uncovered_peak']
+
+------------------------------------------------------------------------------
+2. One team run (TOU, seed 0): campaign log
+------------------------------------------------------------------------------
+  campaign 1: leader chose ['peak', 'events'] | gains peak=+0.002, events=+0.136 | best=0.923 | unresolved=[]
+  campaign 2: leader chose ['solar', 'peak'] | gains solar=+0.015, peak=+0.000 | best=0.938 | unresolved=[]
+  campaign 3: leader chose ['solar', 'events'] | gains solar=+0.013, events=+0.000 | best=0.951 | unresolved=[]
+  campaign 4: leader chose ['solar', 'arbitrage'] | gains solar=+0.006, arbitrage=+0.002 | best=0.956 | unresolved=[]
+  campaign 5: leader chose ['solar', 'arbitrage'] | gains solar=+0.009 | best=0.965 | unresolved=[]
+
+------------------------------------------------------------------------------
+3. Conditional memory after the run
+------------------------------------------------------------------------------
+| campaign | orientation | problem            | status     | evidence (dCapture) |
+|----------|-------------|--------------------|------------|---------------------|
+| 1        | peak        | uncovered_peak     | supported  | +0.0022             |
+| 1        | events      | uncovered_peak     | supported  | +0.1356             |
+| 2        | solar       | wasted_solar       | supported  | +0.0153             |
+| 2        | peak        | uncovered_peak     | unresolved | +0.0000             |
+| 3        | solar       | wasted_solar       | supported  | +0.0127             |
+| 3        | events      | uncovered_peak     | unresolved | +0.0000             |
+| 4        | solar       | wasted_solar       | supported  | +0.0056             |
+| 4        | arbitrage   | excess_grid_charge | supported  | +0.0016             |
+| 5        | solar       | wasted_solar       | supported  | +0.0091             |
+
+  supported findings: 7, still-unresolved problems: []
+  best program found:
+    def policy(o):
+        if o.surplus_fc >= 0.75:
+            return ABSORB_SURPLUS
+        if o.price_rank <= 0.05 and o.surplus_left_fc <= 15.00 and o.soc <= 0.80:
+            return CHARGE_MAX
+        if o.price_rank <= 0.30 and o.surplus_left_fc <= 6.00:
+            return CHARGE_MAX
+        if o.price_rank >= 0.85 and o.soc >= 0.25 and o.soc <= 0.70:
+            return DISCHARGE_MAX
+        return SELF_CONSUME
+    
+  held-out Score(capture=0.954, solved=99/100)
+
+------------------------------------------------------------------------------
+4. Does conditional sharing beat independent exploration? (8 seeds, same budget)
+------------------------------------------------------------------------------
+| tariff        | coordination          | held-out capture | vs independent |
+|---------------|-----------------------|------------------|----------------|
+| tou           | conditional memory    | 0.929 +/- 0.029  | +1.8%          |
+| tou           | unconditional sharing | 0.912 +/- 0.025  | -0.1%          |
+| tou           | independent           | 0.913 +/- 0.016  | +0.0%          |
+| critical_peak | conditional memory    | 0.942 +/- 0.011  | +0.5%          |
+| critical_peak | unconditional sharing | 0.945 +/- 0.011  | +0.8%          |
+| critical_peak | independent           | 0.937 +/- 0.007  | +0.0%          |
+| wholesale     | conditional memory    | 0.736 +/- 0.022  | +1.0%          |
+| wholesale     | unconditional sharing | 0.771 +/- 0.035  | +5.7%          |
+| wholesale     | independent           | 0.729 +/- 0.046  | +0.0%          |
+
+  Paper: experience sharing beats independent exploration by 1.9-27.5%.
+  Here: some form of sharing beats independent researchers on 3/3 tariffs;
+  conditional memory beats unconditional sharing on 1/3 -- so the benefit of
+  SHARING replicates, while the benefit of the resolved/unresolved FILTER is task-dependent.
+  Seed spread (+/-) is comparable to several gaps: treat single-tariff differences with caution.
+
+[evidence saved to results\lab10_10.json]
+[runtime 7.2s]

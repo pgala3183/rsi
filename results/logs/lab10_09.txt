@@ -1,0 +1,45 @@
+==============================================================================
+LAB 10.09 | Compare scaling approaches at a matched budget
+source: AReaL-RSI 2610.18083 vs SwarmRSI 2610.20431
+==============================================================================
+
+------------------------------------------------------------------------------
+1. Mechanism comparison (from the code in gridwise/methods/)
+------------------------------------------------------------------------------
+| aspect       | AReaL-RSI (areal_rsi.py)                      | SwarmRSI (swarm_rsi.py)                                         |
+|--------------|-----------------------------------------------|-----------------------------------------------------------------|
+| coordination | leader assigns orientations to 2 researchers  | 5 peers, no leader                                              |
+| memory       | conditional: supported vs unresolved          | shared feedback board + archive of successful edits             |
+| evolution    | evidence-based review re-weights orientations | mutation + complementary recombination + hypothesis restarts    |
+| selection    | leader keeps only validated improvements      | each agent keeps its own best; weakest replaced by recombinants |
+| diversity    | low: researchers restart from the shared best | high early, measured each generation                            |
+
+------------------------------------------------------------------------------
+2. Matched-budget results (8 seeds, held-out capture)
+------------------------------------------------------------------------------
+| tariff        | approach                | held-out capture |
+|---------------|-------------------------|------------------|
+| tou           | AReaL-RSI team          | 0.930 +/- 0.031  |
+| tou           | SwarmRSI                | 0.933 +/- 0.017  |
+| tou           | independent researchers | 0.921 +/- 0.014  |
+| tou           | single agent            | 0.923 +/- 0.020  |
+| critical_peak | AReaL-RSI team          | 0.948 +/- 0.012  |
+| critical_peak | SwarmRSI                | 0.942 +/- 0.010  |
+| critical_peak | independent researchers | 0.948 +/- 0.015  |
+| critical_peak | single agent            | 0.941 +/- 0.009  |
+| wholesale     | AReaL-RSI team          | 0.756 +/- 0.024  |
+| wholesale     | SwarmRSI                | 0.737 +/- 0.035  |
+| wholesale     | independent researchers | 0.770 +/- 0.036  |
+| wholesale     | single agent            | 0.769 +/- 0.022  |
+
+------------------------------------------------------------------------------
+3. Advantages, limitations, when to choose (grounded in the rows above)
+------------------------------------------------------------------------------
+  tariffs won: AReaL-RSI team=0, SwarmRSI=1, independent researchers=2, single agent=0
+| approach  | advantage                                                                        | limitation                                                         | choose it when                                                 |
+|-----------|----------------------------------------------------------------------------------|--------------------------------------------------------------------|----------------------------------------------------------------|
+| AReaL-RSI | cheap coordination; validated findings only; interpretable campaign log          | orientations are hand-defined; a bad leader prior wastes campaigns | a known research agenda with distinct sub-problems             |
+| SwarmRSI  | parallel diverse hypotheses; recombines complementary programs; reusable archive | budget split 5 ways; diversity collapses as agents converge        | open-ended search, or many campaigns that can reuse experience |
+
+[evidence saved to results\lab10_09.json]
+[runtime 14.4s]

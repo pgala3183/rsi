@@ -1,0 +1,829 @@
+{
+  "comparison": {
+    "tou": {
+      "root": 0.7121535667658883,
+      "naive": [
+        0.8038917748267116,
+        0.8038917748267116,
+        0.8038917748267116,
+        0.8038917748267116,
+        0.8038917748267116,
+        0.8038917748267116,
+        0.8038917748267116,
+        0.8038917748267116
+      ],
+      "so_rsi": [
+        0.9263588536007173,
+        0.9263588536007173,
+        0.9263588536007173,
+        0.9263588536007173,
+        0.9263588536007173,
+        0.9263588536007173,
+        0.9263588536007173,
+        0.9263588536007173
+      ],
+      "naive_thrash": [
+        {
+          "recurrence": 64,
+          "opposing": 0,
+          "mismatch": 73,
+          "longest_zero_progress": 94,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 61,
+          "opposing": 0,
+          "mismatch": 68,
+          "longest_zero_progress": 86,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 62,
+          "opposing": 2,
+          "mismatch": 78,
+          "longest_zero_progress": 93,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 59,
+          "opposing": 7,
+          "mismatch": 75,
+          "longest_zero_progress": 89,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 63,
+          "opposing": 2,
+          "mismatch": 79,
+          "longest_zero_progress": 89,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 48,
+          "opposing": 1,
+          "mismatch": 71,
+          "longest_zero_progress": 93,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 58,
+          "opposing": 0,
+          "mismatch": 71,
+          "longest_zero_progress": 96,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 65,
+          "opposing": 0,
+          "mismatch": 83,
+          "longest_zero_progress": 70,
+          "attempts": 99,
+          "accepted": 2
+        }
+      ],
+      "so_rsi_thrash": [
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 7,
+          "longest_zero_progress": 8,
+          "attempts": 22,
+          "accepted": 3
+        },
+        {
+          "recurrence": 6,
+          "opposing": 4,
+          "mismatch": 6,
+          "longest_zero_progress": 9,
+          "attempts": 22,
+          "accepted": 3
+        },
+        {
+          "recurrence": 6,
+          "opposing": 3,
+          "mismatch": 7,
+          "longest_zero_progress": 11,
+          "attempts": 24,
+          "accepted": 3
+        },
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 7,
+          "longest_zero_progress": 6,
+          "attempts": 19,
+          "accepted": 3
+        },
+        {
+          "recurrence": 7,
+          "opposing": 1,
+          "mismatch": 13,
+          "longest_zero_progress": 12,
+          "attempts": 28,
+          "accepted": 3
+        },
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 6,
+          "longest_zero_progress": 9,
+          "attempts": 18,
+          "accepted": 3
+        },
+        {
+          "recurrence": 5,
+          "opposing": 3,
+          "mismatch": 8,
+          "longest_zero_progress": 12,
+          "attempts": 22,
+          "accepted": 3
+        },
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 7,
+          "longest_zero_progress": 7,
+          "attempts": 19,
+          "accepted": 3
+        }
+      ]
+    },
+    "vpp_events": {
+      "root": 0.8412446840114078,
+      "naive": [
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187
+      ],
+      "so_rsi": [
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187,
+        0.9587293849860187
+      ],
+      "naive_thrash": [
+        {
+          "recurrence": 68,
+          "opposing": 29,
+          "mismatch": 41,
+          "longest_zero_progress": 87,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 60,
+          "opposing": 25,
+          "mismatch": 30,
+          "longest_zero_progress": 92,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 66,
+          "opposing": 20,
+          "mismatch": 40,
+          "longest_zero_progress": 93,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 65,
+          "opposing": 9,
+          "mismatch": 47,
+          "longest_zero_progress": 92,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 65,
+          "opposing": 28,
+          "mismatch": 37,
+          "longest_zero_progress": 92,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 67,
+          "opposing": 15,
+          "mismatch": 34,
+          "longest_zero_progress": 90,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 58,
+          "opposing": 23,
+          "mismatch": 39,
+          "longest_zero_progress": 95,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 77,
+          "opposing": 8,
+          "mismatch": 45,
+          "longest_zero_progress": 95,
+          "attempts": 99,
+          "accepted": 2
+        }
+      ],
+      "so_rsi_thrash": [
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 7,
+          "longest_zero_progress": 11,
+          "attempts": 21,
+          "accepted": 2
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 4,
+          "longest_zero_progress": 11,
+          "attempts": 19,
+          "accepted": 2
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 5,
+          "longest_zero_progress": 16,
+          "attempts": 23,
+          "accepted": 2
+        },
+        {
+          "recurrence": 7,
+          "opposing": 3,
+          "mismatch": 7,
+          "longest_zero_progress": 19,
+          "attempts": 28,
+          "accepted": 2
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 3,
+          "longest_zero_progress": 13,
+          "attempts": 21,
+          "accepted": 2
+        },
+        {
+          "recurrence": 6,
+          "opposing": 3,
+          "mismatch": 7,
+          "longest_zero_progress": 20,
+          "attempts": 25,
+          "accepted": 2
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 3,
+          "longest_zero_progress": 15,
+          "attempts": 19,
+          "accepted": 2
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 3,
+          "longest_zero_progress": 11,
+          "attempts": 16,
+          "accepted": 2
+        }
+      ]
+    },
+    "critical_peak": {
+      "root": 0.7904486024998226,
+      "naive": [
+        0.8435247953547043,
+        0.8435247953547043,
+        0.8035466644996544,
+        0.8435247953547043,
+        0.8435247953547043,
+        0.8435247953547043,
+        0.8435247953547043,
+        0.8435247953547043
+      ],
+      "so_rsi": [
+        0.921815568206508,
+        0.921815568206508,
+        0.921815568206508,
+        0.921815568206508,
+        0.921815568206508,
+        0.921815568206508,
+        0.921815568206508,
+        0.921815568206508
+      ],
+      "naive_thrash": [
+        {
+          "recurrence": 67,
+          "opposing": 4,
+          "mismatch": 65,
+          "longest_zero_progress": 91,
+          "attempts": 99,
+          "accepted": 3
+        },
+        {
+          "recurrence": 63,
+          "opposing": 4,
+          "mismatch": 42,
+          "longest_zero_progress": 53,
+          "attempts": 99,
+          "accepted": 3
+        },
+        {
+          "recurrence": 62,
+          "opposing": 18,
+          "mismatch": 5,
+          "longest_zero_progress": 92,
+          "attempts": 99,
+          "accepted": 2
+        },
+        {
+          "recurrence": 70,
+          "opposing": 8,
+          "mismatch": 64,
+          "longest_zero_progress": 77,
+          "attempts": 99,
+          "accepted": 3
+        },
+        {
+          "recurrence": 71,
+          "opposing": 12,
+          "mismatch": 40,
+          "longest_zero_progress": 51,
+          "attempts": 99,
+          "accepted": 3
+        },
+        {
+          "recurrence": 64,
+          "opposing": 1,
+          "mismatch": 75,
+          "longest_zero_progress": 83,
+          "attempts": 99,
+          "accepted": 3
+        },
+        {
+          "recurrence": 65,
+          "opposing": 7,
+          "mismatch": 39,
+          "longest_zero_progress": 52,
+          "attempts": 99,
+          "accepted": 3
+        },
+        {
+          "recurrence": 80,
+          "opposing": 12,
+          "mismatch": 42,
+          "longest_zero_progress": 51,
+          "attempts": 99,
+          "accepted": 4
+        }
+      ],
+      "so_rsi_thrash": [
+        {
+          "recurrence": 4,
+          "opposing": 5,
+          "mismatch": 4,
+          "longest_zero_progress": 7,
+          "attempts": 23,
+          "accepted": 4
+        },
+        {
+          "recurrence": 3,
+          "opposing": 0,
+          "mismatch": 1,
+          "longest_zero_progress": 4,
+          "attempts": 17,
+          "accepted": 4
+        },
+        {
+          "recurrence": 3,
+          "opposing": 0,
+          "mismatch": 3,
+          "longest_zero_progress": 3,
+          "attempts": 17,
+          "accepted": 4
+        },
+        {
+          "recurrence": 4,
+          "opposing": 7,
+          "mismatch": 6,
+          "longest_zero_progress": 8,
+          "attempts": 24,
+          "accepted": 4
+        },
+        {
+          "recurrence": 3,
+          "opposing": 0,
+          "mismatch": 4,
+          "longest_zero_progress": 5,
+          "attempts": 14,
+          "accepted": 4
+        },
+        {
+          "recurrence": 7,
+          "opposing": 4,
+          "mismatch": 8,
+          "longest_zero_progress": 14,
+          "attempts": 30,
+          "accepted": 5
+        },
+        {
+          "recurrence": 6,
+          "opposing": 0,
+          "mismatch": 3,
+          "longest_zero_progress": 8,
+          "attempts": 21,
+          "accepted": 4
+        },
+        {
+          "recurrence": 4,
+          "opposing": 3,
+          "mismatch": 1,
+          "longest_zero_progress": 8,
+          "attempts": 22,
+          "accepted": 5
+        }
+      ]
+    },
+    "wholesale": {
+      "root": 0.500846212187869,
+      "naive": [
+        0.8041056148548985,
+        0.8040775757077486,
+        0.8041056148548985,
+        0.8041056148548985,
+        0.8041056148548985,
+        0.8041056148548985,
+        0.5793062559959921,
+        0.8041056148548985
+      ],
+      "so_rsi": [
+        0.752016872934024,
+        0.760995631435101,
+        0.7602346072601469,
+        0.7895537319896563,
+        0.8022559056708536,
+        0.7859833168279057,
+        0.7220486805351463,
+        0.7288338366898555
+      ],
+      "naive_thrash": [
+        {
+          "recurrence": 57,
+          "opposing": 1,
+          "mismatch": 71,
+          "longest_zero_progress": 45,
+          "attempts": 99,
+          "accepted": 14
+        },
+        {
+          "recurrence": 62,
+          "opposing": 0,
+          "mismatch": 83,
+          "longest_zero_progress": 44,
+          "attempts": 99,
+          "accepted": 12
+        },
+        {
+          "recurrence": 59,
+          "opposing": 0,
+          "mismatch": 65,
+          "longest_zero_progress": 72,
+          "attempts": 99,
+          "accepted": 15
+        },
+        {
+          "recurrence": 56,
+          "opposing": 0,
+          "mismatch": 65,
+          "longest_zero_progress": 63,
+          "attempts": 99,
+          "accepted": 16
+        },
+        {
+          "recurrence": 55,
+          "opposing": 2,
+          "mismatch": 69,
+          "longest_zero_progress": 73,
+          "attempts": 99,
+          "accepted": 14
+        },
+        {
+          "recurrence": 64,
+          "opposing": 0,
+          "mismatch": 76,
+          "longest_zero_progress": 78,
+          "attempts": 99,
+          "accepted": 14
+        },
+        {
+          "recurrence": 66,
+          "opposing": 2,
+          "mismatch": 86,
+          "longest_zero_progress": 57,
+          "attempts": 99,
+          "accepted": 12
+        },
+        {
+          "recurrence": 64,
+          "opposing": 0,
+          "mismatch": 70,
+          "longest_zero_progress": 55,
+          "attempts": 99,
+          "accepted": 16
+        }
+      ],
+      "so_rsi_thrash": [
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 13,
+          "longest_zero_progress": 8,
+          "attempts": 31,
+          "accepted": 11
+        },
+        {
+          "recurrence": 3,
+          "opposing": 0,
+          "mismatch": 10,
+          "longest_zero_progress": 8,
+          "attempts": 29,
+          "accepted": 12
+        },
+        {
+          "recurrence": 3,
+          "opposing": 0,
+          "mismatch": 5,
+          "longest_zero_progress": 12,
+          "attempts": 29,
+          "accepted": 14
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 6,
+          "longest_zero_progress": 7,
+          "attempts": 35,
+          "accepted": 17
+        },
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 16,
+          "longest_zero_progress": 14,
+          "attempts": 41,
+          "accepted": 13
+        },
+        {
+          "recurrence": 2,
+          "opposing": 0,
+          "mismatch": 3,
+          "longest_zero_progress": 7,
+          "attempts": 25,
+          "accepted": 13
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 10,
+          "longest_zero_progress": 6,
+          "attempts": 24,
+          "accepted": 10
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 9,
+          "longest_zero_progress": 8,
+          "attempts": 30,
+          "accepted": 16
+        }
+      ]
+    },
+    "solar_glut": {
+      "root": 0.7786076576818833,
+      "naive": [
+        0.9474591713799154,
+        0.7786076576818833,
+        0.9474591713799154,
+        0.9474591713799154,
+        0.9474591713799154,
+        0.7786076576818833,
+        0.7786076576818833,
+        0.7786076576818833
+      ],
+      "so_rsi": [
+        0.7786076576818833,
+        0.7786076576818833,
+        0.9474591713799154,
+        0.9580199148222042,
+        0.7786076576818833,
+        0.7786076576818833,
+        0.7786076576818833,
+        0.7786076576818833
+      ],
+      "naive_thrash": [
+        {
+          "recurrence": 59,
+          "opposing": 0,
+          "mismatch": 46,
+          "longest_zero_progress": 50,
+          "attempts": 99,
+          "accepted": 1
+        },
+        {
+          "recurrence": 69,
+          "opposing": 0,
+          "mismatch": 20,
+          "longest_zero_progress": 99,
+          "attempts": 99,
+          "accepted": 0
+        },
+        {
+          "recurrence": 62,
+          "opposing": 0,
+          "mismatch": 40,
+          "longest_zero_progress": 64,
+          "attempts": 99,
+          "accepted": 1
+        },
+        {
+          "recurrence": 61,
+          "opposing": 0,
+          "mismatch": 60,
+          "longest_zero_progress": 76,
+          "attempts": 99,
+          "accepted": 1
+        },
+        {
+          "recurrence": 61,
+          "opposing": 0,
+          "mismatch": 66,
+          "longest_zero_progress": 71,
+          "attempts": 99,
+          "accepted": 1
+        },
+        {
+          "recurrence": 71,
+          "opposing": 0,
+          "mismatch": 18,
+          "longest_zero_progress": 99,
+          "attempts": 99,
+          "accepted": 0
+        },
+        {
+          "recurrence": 62,
+          "opposing": 0,
+          "mismatch": 22,
+          "longest_zero_progress": 99,
+          "attempts": 99,
+          "accepted": 0
+        },
+        {
+          "recurrence": 63,
+          "opposing": 0,
+          "mismatch": 26,
+          "longest_zero_progress": 99,
+          "attempts": 99,
+          "accepted": 0
+        }
+      ],
+      "so_rsi_thrash": [
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 8,
+          "longest_zero_progress": 16,
+          "attempts": 16,
+          "accepted": 0
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 8,
+          "longest_zero_progress": 15,
+          "attempts": 15,
+          "accepted": 0
+        },
+        {
+          "recurrence": 5,
+          "opposing": 0,
+          "mismatch": 9,
+          "longest_zero_progress": 17,
+          "attempts": 18,
+          "accepted": 1
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 6,
+          "longest_zero_progress": 11,
+          "attempts": 15,
+          "accepted": 2
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 8,
+          "longest_zero_progress": 15,
+          "attempts": 15,
+          "accepted": 0
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 9,
+          "longest_zero_progress": 17,
+          "attempts": 17,
+          "accepted": 0
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 7,
+          "longest_zero_progress": 15,
+          "attempts": 15,
+          "accepted": 0
+        },
+        {
+          "recurrence": 4,
+          "opposing": 0,
+          "mismatch": 7,
+          "longest_zero_progress": 15,
+          "attempts": 15,
+          "accepted": 0
+        }
+      ]
+    }
+  },
+  "example_trace": [
+    "[  0] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[  1] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[  2] wasted_solar       -> create hold      dir=+1  ACCEPT dScore=+0.0813 dSymptom=+15.6",
+    "[  3] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0454 dSymptom=-5.7",
+    "      !! anomaly=mismatch on slot=hold",
+    "      ?? attribution probe: cost rose most at hour 20 (+$6.86 over 48 days): inconclusive",
+    "[  4] uncovered_peak     -> create spike     dir=-1  ACCEPT dScore=+0.0022 dSymptom=+5.1",
+    "[  5] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[  6] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3",
+    "      !! anomaly=mismatch on slot=absorb",
+    "      ?? attribution probe: cost rose most at hour 17 (+$0.44 over 48 days): inconclusive",
+    "[  7] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[  8] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3",
+    "[  9] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3",
+    "      !! anomaly=recurrence on slot=absorb",
+    "      ?? sweep probe: absorb.surplus_fc is NOT a lever (no threshold beats the incumbent; spread=0.020)",
+    "      ?? lever probe: no lever found (shadowed 0%, empty 1%): ban this patch",
+    "[ 10] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0689 dSymptom=-13.0",
+    "[ 11] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0454 dSymptom=-5.7",
+    "      !! anomaly=recurrence on slot=hold",
+    "      ?? sweep probe: hold.peak_ahead is NOT a lever (no threshold beats the incumbent; spread=0.081)",
+    "      ?? lever probe: no lever found (shadowed 0%, empty 0%): ban this patch",
+    "      !! anomaly=mismatch on slot=hold",
+    "      ?? attribution probe: cost rose most at hour 20 (+$6.86 over 48 days): inconclusive",
+    "[ 12] missed_grid_charge -> create charge    dir=+1  reject dScore=-0.0396 dSymptom=-1.2",
+    "      !! anomaly=mismatch on slot=charge",
+    "      ?? attribution probe: cost rose most at hour 1 (+$31.52 over 48 days): grid charging filled the battery before free solar arrived",
+    "      -> guard: keep the patch, add guard surplus_left_fc <= 4.0  dScore=+0.0686 ACCEPT",
+    "[ 14] missed_grid_charge -> tweak  charge    dir=+1  reject dScore=-0.0094 dSymptom=+0.0",
+    "[ 15] missed_grid_charge -> tweak  charge    dir=+1  reject dScore=-0.0094 dSymptom=+0.0",
+    "      !! anomaly=recurrence on slot=charge",
+    "      ?? sweep probe: charge.price_rank is NOT a lever (no threshold beats the incumbent; spread=0.826)",
+    "      ?? lever probe: no lever found (shadowed 0%, empty 0%): ban this patch",
+    "[ 16] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[ 17] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[ 18] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[ 19] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "[ 20] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "      !! anomaly=recurrence on slot=peak",
+    "      ?? sweep probe: peak.price_rank is NOT a lever (no threshold beats the incumbent; spread=0.644)",
+    "      ?? lever probe: no lever found (shadowed 5%, empty 0%): ban this patch",
+    "[ 21] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0",
+    "      !! anomaly=recurrence on slot=spike",
+    "      ?? sweep probe: spike.export_price is NOT a lever (no threshold beats the incumbent; spread=0.000)",
+    "      ?? lever probe: no lever found (shadowed 0%, empty 25%): ban this patch"
+  ],
+  "final_program": "def policy(o):\n    if o.export_price >= 0.60:\n        return DISCHARGE_MAX\n    if o.price_rank <= 0.15 and o.soc <= 0.90 and o.surplus_left_fc <= 4.00:\n        return CHARGE_MAX\n    if o.peak_ahead >= 0.40 and o.price_rank <= 0.60 and o.surplus_fc <= 0.00:\n        return IDLE\n    return SELF_CONSUME\n",
+  "runtime_seconds": 6.28,
+  "fast_mode": false
+}

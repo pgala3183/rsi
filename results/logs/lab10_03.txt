@@ -1,0 +1,92 @@
+==============================================================================
+LAB 10.03 | Run Budget RSI: score edits before they run
+source: arXiv:2610.29121
+==============================================================================
+
+------------------------------------------------------------------------------
+1. Task: one day = 24 hourly battery decisions; score = share of the oracle's savings captured
+------------------------------------------------------------------------------
+  splits: fit=16 steering=48 held-out=100 days (paper: 16 / 48 / 100)
+  steering: no battery $6.97/day, oracle $1.17/day
+  starting program (what most home batteries ship with):
+    def policy(o):
+        return SELF_CONSUME
+    
+  seed                 steering Score(capture=0.787, solved=30/48)
+  hand-written expert  steering Score(capture=0.932, solved=47/48)
+
+------------------------------------------------------------------------------
+2. Calibration: label 96 random edits on the 16-day fit split, fit ONE readout, freeze it
+------------------------------------------------------------------------------
+  labelled edits: 96, fit-split day-sims spent: 1152
+  readout R^2 on its own training edits: 0.319
+  standardised coefficients (largest first):
+    constants_changed  +0.2743
+    conds_delta        -0.1702
+    reordered          +0.0573
+    parent_rate        +0.0518
+    lines_added        +0.0220
+    rules_added        +0.0152
+    lines_deleted      +0.0115
+    returns_changed    +0.0112
+    rules_deleted      +0.0092
+
+------------------------------------------------------------------------------
+3. One proposal, scored before it runs
+------------------------------------------------------------------------------
+--- parent.py
++++ child.py
+@@ -1,2 +1,4 @@
+ def policy(o):
++    if o.peak_ahead >= 0.50 and o.price_rank <= 0.50:
++        return IDLE
+     return SELF_CONSUME
+
+  8 diff coordinates: lines_added=2, lines_deleted=0, rules_added=1, rules_deleted=0, conds_delta=2, constants_changed=2, returns_changed=1, reordered=0
+  predicted capture (no simulation): 0.879
+  actual steering capture (simulated afterwards, for the demo): 0.537
+
+------------------------------------------------------------------------------
+4. One search: archive of four nodes, expand ONE proposal per step
+------------------------------------------------------------------------------
+  expand node 1 <- parent 0 via add_rule        pred=0.879 steering=0.787 solved=30/48
+  expand node 2 <- parent 0 via add_rule        pred=0.879 steering=0.787 solved=30/48
+  expand node 3 <- parent 0 via add_rule        pred=0.879 steering=0.924 solved=45/48
+  proposals scored by the readout without running: 20
+  returned: node 3 (earliest with maximal steering solve count 45/48)
+    def policy(o):
+        if o.price_rank <= 0.30 and o.surplus_left_fc <= 8.00:
+            return CHARGE_MAX
+        return SELF_CONSUME
+    
+  held-out (reported once, after search): Score(capture=0.935, solved=93/100)
+
+------------------------------------------------------------------------------
+5. Twelve runs (paper: twelve runs per method), held-out capture on 100 unseen days
+------------------------------------------------------------------------------
+| method               | held-out capture (mean +/- sd) | W/T/L vs HGM (paired runs) | paper GPT-4o HumanEval+ % |
+|----------------------|--------------------------------|----------------------------|---------------------------|
+| readout (Budget RSI) | 0.817 +/- 0.074                | 5/3/4                      | 87.0                      |
+| HGM selection        | 0.787 +/- 0.083                | -                          | 85.1                      |
+| parent-rate ablation | 0.770 +/- 0.076                | 0/8/4                      | 84.2                      |
+| random               | 0.733 +/- 0.056                | 3/3/6                      | -                         |
+| root                 | 0.712 +/- 0.000                | 1/5/6                      | 81.2                      |
+| calibration-best     | 0.887 +/- 0.030                | 12/0/0                     | 82.8                      |
+
+  Same ordering as the paper for readout > HGM > parent-rate > root.
+  NOT as in the paper: calibration-best is strongest here, because calibration itself is a
+  96-candidate search on a low-noise fit split -- and it costs 6.6x the search (see 6).
+
+------------------------------------------------------------------------------
+6. Measured cost per run (day-simulations)
+------------------------------------------------------------------------------
+| phase                                                     | day-sims |
+|-----------------------------------------------------------|----------|
+| calibration (96 edits x 16 fit days, cached repeats free) | 1263     |
+| search with readout (4 nodes x 48 steering days)          | 192      |
+| search if every proposal were evaluated (upper bound)     | <= 2304  |
+  The readout makes SEARCH cheap. Whether the whole method is cheap depends on amortising
+  calibration across runs (lab 10.05 tests this).
+
+[evidence saved to results\lab10_03.json]
+[runtime 1.8s]

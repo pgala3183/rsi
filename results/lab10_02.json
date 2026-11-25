@@ -1,0 +1,51 @@
+{
+  "checks": [
+    [
+      "split sizes match the paper (16/48/100)",
+      "PASS",
+      "{'fit': 16, 'steering': 48, 'heldout': 100}"
+    ],
+    [
+      "splits are disjoint",
+      "PASS",
+      "0 shared days"
+    ],
+    [
+      "improver cannot read held-out",
+      "PASS",
+      "BoundaryViolation raised"
+    ],
+    [
+      "search never touched held-out",
+      "PASS",
+      "0 reads"
+    ],
+    [
+      "fit-split cost = 16 x distinct programs labelled",
+      "PASS",
+      "1152 vs 1152"
+    ],
+    [
+      "steering cost = 48 x archive nodes",
+      "PASS",
+      "192 vs 192"
+    ],
+    [
+      "re-running a seed reproduces the program and score",
+      "PASS",
+      "score 0.8897 vs 0.8897"
+    ],
+    [
+      "source == interpreter",
+      "PASS",
+      "0 mismatches"
+    ],
+    [
+      "oracle slack <= 1.5 SoC steps at the day's peak price",
+      "PASS",
+      "worst 1.01 steps"
+    ]
+  ],
+  "runtime_seconds": 1.67,
+  "fast_mode": false
+}

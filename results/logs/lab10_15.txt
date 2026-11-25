@@ -1,0 +1,46 @@
+==============================================================================
+LAB 10.15 | RSI-Index across five tariff benchmarks
+source: RSIGym, arXiv:2610.10310
+==============================================================================
+
+------------------------------------------------------------------------------
+1. Worked example from the course page
+------------------------------------------------------------------------------
+  benchmarks: initial [0.5, 0.2], final [0.75, 0.6], ideal 1.0
+  (final - initial)/(ideal - initial) -> 0.50   (matches the page's worked answer 0.5)
+  (initial - final)/(ideal - initial) -> -0.50   (the formula as printed: sign error)
+
+------------------------------------------------------------------------------
+2. Run each method on each benchmark (4800 day-sims each, 4 seeds)
+------------------------------------------------------------------------------
+| benchmark     | initial (seed) | final: Budget RSI | final: SO-RSI | final: SwarmRSI |
+|---------------|----------------|-------------------|---------------|-----------------|
+| tou           | 0.712          | 0.874             | 0.926         | 0.937           |
+| vpp_events    | 0.841          | 0.900             | 0.959         | 0.962           |
+| critical_peak | 0.790          | 0.903             | 0.922         | 0.945           |
+| wholesale     | 0.501          | 0.674             | 0.766         | 0.756           |
+| solar_glut    | 0.779          | 0.957             | 0.866         | 0.972           |
+  mean day-sims actually used per run: Budget RSI 4833, SO-RSI 2719, SwarmRSI 4843
+  (SO-RSI can stop early: once its inquiry memory has banned every patch for the current symptoms
+   its first-order loop stalls. Unspent budget is reported, not redistributed.)
+
+------------------------------------------------------------------------------
+3. Per-benchmark gap closed and RSI-Index
+------------------------------------------------------------------------------
+| benchmark                 | Budget RSI | SO-RSI | SwarmRSI |
+|---------------------------|------------|--------|----------|
+| tou                       | 0.564      | 0.744  | 0.782    |
+| vpp_events                | 0.367      | 0.740  | 0.759    |
+| critical_peak             | 0.538      | 0.627  | 0.736    |
+| wholesale                 | 0.346      | 0.531  | 0.511    |
+| solar_glut                | 0.806      | 0.393  | 0.872    |
+| RSI-Index (mean)          | 0.524      | 0.607  | 0.732    |
+| course formula as printed | -0.524     | -0.607 | -0.732   |
+
+  Paper: Opus 5 reaches RSI-Index 0.4809 under a $500 budget per benchmark (5 benchmarks).
+  Ours is a different system on a different task; only the METRIC is shared.
+  The index weighs a benchmark with little remaining gap (vpp_events, solar_glut) as heavily as one
+  with a large gap (wholesale): a small absolute gain on an almost-solved benchmark counts a lot.
+
+[evidence saved to results\lab10_15.json]
+[runtime 32.9s]

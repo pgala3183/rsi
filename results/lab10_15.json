@@ -1,0 +1,49 @@
+{
+  "initial": {
+    "tou": 0.7121535667658883,
+    "vpp_events": 0.8412446840114078,
+    "critical_peak": 0.7904486024998226,
+    "wholesale": 0.500846212187869,
+    "solar_glut": 0.7786076576818833
+  },
+  "final": {
+    "Budget RSI": {
+      "tou": 0.8743731427193827,
+      "vpp_events": 0.8995601570067437,
+      "critical_peak": 0.9031865939654279,
+      "wholesale": 0.673573176146147,
+      "solar_glut": 0.957109592884376
+    },
+    "SO-RSI": {
+      "tou": 0.9263588536007173,
+      "vpp_events": 0.9587293849860187,
+      "critical_peak": 0.921815568206508,
+      "wholesale": 0.765700210904732,
+      "solar_glut": 0.8656736003914716
+    },
+    "SwarmRSI": {
+      "tou": 0.9373261247165949,
+      "vpp_events": 0.9617196953960806,
+      "critical_peak": 0.9445794567012488,
+      "wholesale": 0.7557890230317252,
+      "solar_glut": 0.9716710531622541
+    }
+  },
+  "rsi_index": {
+    "Budget RSI": 0.5242396584404501,
+    "SO-RSI": 0.6069938053904211,
+    "SwarmRSI": 0.7318916344675686
+  },
+  "course_formula": {
+    "Budget RSI": -0.5242396584404501,
+    "SO-RSI": -0.6069938053904211,
+    "SwarmRSI": -0.7318916344675686
+  },
+  "day_sims_used": {
+    "Budget RSI": 4832.8,
+    "SO-RSI": 2719.2,
+    "SwarmRSI": 4843.2
+  },
+  "runtime_seconds": 32.91,
+  "fast_mode": false
+}

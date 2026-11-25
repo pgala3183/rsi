@@ -1,0 +1,173 @@
+{
+  "triggers": {
+    "mismatch": 91,
+    "recurrence": 78,
+    "opposing": 30
+  },
+  "simultaneous": 40,
+  "probe_share": 0.6388583973655324,
+  "findings": {
+    "mismatch": {
+      "attribution: inconclusive": 29,
+      "attribution: grid charge displaced solar": 16,
+      "attribution: blocks absorbing": 2
+    },
+    "recurrence": {
+      "lever: no lever found": 64,
+      "sweep: IS a lever": 7
+    },
+    "opposing": {
+      "split: no conflict": 7,
+      "split: conflicting constraints": 4
+    }
+  },
+  "interventions": {
+    "mismatch": [
+      18,
+      16,
+      0.9492520291430788
+    ],
+    "opposing": [
+      4,
+      0,
+      0.0
+    ],
+    "recurrence": [
+      7,
+      7,
+      0.022368025288689974
+    ]
+  },
+  "naive_stats": [
+    {
+      "recurrence": 64,
+      "opposing": 0,
+      "mismatch": 73,
+      "longest_zero_progress": 94,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 61,
+      "opposing": 0,
+      "mismatch": 68,
+      "longest_zero_progress": 86,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 62,
+      "opposing": 2,
+      "mismatch": 78,
+      "longest_zero_progress": 93,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 59,
+      "opposing": 7,
+      "mismatch": 75,
+      "longest_zero_progress": 89,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 63,
+      "opposing": 2,
+      "mismatch": 79,
+      "longest_zero_progress": 89,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 48,
+      "opposing": 1,
+      "mismatch": 71,
+      "longest_zero_progress": 93,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 58,
+      "opposing": 0,
+      "mismatch": 71,
+      "longest_zero_progress": 96,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 65,
+      "opposing": 0,
+      "mismatch": 83,
+      "longest_zero_progress": 70,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 67,
+      "opposing": 4,
+      "mismatch": 65,
+      "longest_zero_progress": 91,
+      "attempts": 99,
+      "accepted": 3
+    },
+    {
+      "recurrence": 63,
+      "opposing": 4,
+      "mismatch": 42,
+      "longest_zero_progress": 53,
+      "attempts": 99,
+      "accepted": 3
+    },
+    {
+      "recurrence": 62,
+      "opposing": 18,
+      "mismatch": 5,
+      "longest_zero_progress": 92,
+      "attempts": 99,
+      "accepted": 2
+    },
+    {
+      "recurrence": 70,
+      "opposing": 8,
+      "mismatch": 64,
+      "longest_zero_progress": 77,
+      "attempts": 99,
+      "accepted": 3
+    },
+    {
+      "recurrence": 71,
+      "opposing": 12,
+      "mismatch": 40,
+      "longest_zero_progress": 51,
+      "attempts": 99,
+      "accepted": 3
+    },
+    {
+      "recurrence": 64,
+      "opposing": 1,
+      "mismatch": 75,
+      "longest_zero_progress": 83,
+      "attempts": 99,
+      "accepted": 3
+    },
+    {
+      "recurrence": 65,
+      "opposing": 7,
+      "mismatch": 39,
+      "longest_zero_progress": 52,
+      "attempts": 99,
+      "accepted": 3
+    },
+    {
+      "recurrence": 80,
+      "opposing": 12,
+      "mismatch": 42,
+      "longest_zero_progress": 51,
+      "attempts": 99,
+      "accepted": 4
+    }
+  ],
+  "runtime_seconds": 2.43,
+  "fast_mode": false
+}

@@ -1,0 +1,73 @@
+==============================================================================
+LAB 10.13 | RSIFlow: an evolving meta-agent routes the workflow
+source: arXiv:2610.21791
+==============================================================================
+
+------------------------------------------------------------------------------
+1. The workflow graph
+------------------------------------------------------------------------------
+  diagnose -> tune ['tweak_threshold'] | extend ['add_rule'] | restructure ['add_condition', 'swap_rules', 'flip_op'] | prune ['delete_rule', 'drop_condition'] -> evaluate -> accept?
+
+------------------------------------------------------------------------------
+2. One adaptive run (TOU, seed 0): how routing and the graph evolve
+------------------------------------------------------------------------------
+  step  1: bottleneck=uncovered_peak     -> prune        gain=+0.0000
+  step  2: bottleneck=uncovered_peak     -> restructure  gain=+0.0762
+  step  3: bottleneck=wasted_solar       -> prune        gain=-0.0019
+  step  4: bottleneck=wasted_solar       -> tune         gain=-0.0019
+  step  5: bottleneck=wasted_solar       -> restructure  gain=-0.0019
+  step  6: bottleneck=wasted_solar       -> extend       gain=-0.0019
+  step  7: bottleneck=wasted_solar       -> extend       gain=+0.0000
+  step  8: bottleneck=wasted_solar       -> restructure  gain=+0.0012
+  step  9: bottleneck=wasted_solar       -> tune         gain=+0.0014
+  step 10: bottleneck=wasted_solar       -> prune        gain=+0.0000
+  step 11: bottleneck=wasted_solar       -> tune         gain=-0.0044
+  step 12: bottleneck=wasted_solar       -> restructure  gain=+0.0174
+  step 13: bottleneck=wasted_solar       -> restructure  gain=+0.0629
+  step 14: bottleneck=wasted_solar       -> restructure  gain=-0.0847
+  step 15: bottleneck=wasted_solar       -> restructure  gain=-0.0219
+  step 16: bottleneck=wasted_solar       -> restructure  gain=+0.0000
+  step 17: bottleneck=wasted_solar       -> restructure  gain=-0.2438
+  step 18: bottleneck=wasted_solar       -> restructure  gain=-0.1818
+  step 19: bottleneck=wasted_solar       -> restructure  gain=-0.1591
+  step 20: bottleneck=wasted_solar       -> restructure  gain=+0.0000
+  step 21: bottleneck=wasted_solar       -> restructure  gain=+0.0000
+  step 22: bottleneck=wasted_solar       -> restructure  gain=-0.0219
+  step 23: bottleneck=wasted_solar       -> restructure  gain=-0.0847
+  step 24: bottleneck=wasted_solar       -> extend+tune  gain=+0.0000
+  step 25: bottleneck=wasted_solar       -> extend+tune  gain=+0.0000
+  ... 58 steps
+  graph edits by the meta-agent: step 23: progress stalled -> grew composite branch 'extend+tune'
+
+  learned credit table (visits / mean gain x100) per (bottleneck, branch):
+| bottleneck     | branch      | visits | mean gain x100 |
+|----------------|-------------|--------|----------------|
+| uncovered_peak | prune       | 1      | 0.00           |
+| uncovered_peak | restructure | 1      | 7.62           |
+| wasted_solar   | extend      | 6      | 0.00           |
+| wasted_solar   | extend+tune | 6      | 0.00           |
+| wasted_solar   | prune       | 6      | 0.00           |
+| wasted_solar   | restructure | 30     | 0.28           |
+| wasted_solar   | tune        | 8      | 0.05           |
+
+  routing mix: {'prune': 7, 'restructure': 31, 'tune': 8, 'extend': 6, 'extend+tune': 6}
+  held-out Score(capture=0.908, solved=85/100)
+
+------------------------------------------------------------------------------
+3. Adaptive meta-agent vs static workflow (8 seeds, same budget)
+------------------------------------------------------------------------------
+| tariff        | static workflow | RSIFlow meta-agent | adaptive - static (wins) |
+|---------------|-----------------|--------------------|--------------------------|
+| tou           | 0.896 +/- 0.049 | 0.895 +/- 0.034    | -0.000 (3/8)             |
+| critical_peak | 0.943 +/- 0.012 | 0.932 +/- 0.006    | -0.011 (1/8)             |
+| wholesale     | 0.778 +/- 0.028 | 0.773 +/- 0.036    | -0.005 (5/8)             |
+| solar_glut    | 0.974 +/- 0.004 | 0.972 +/- 0.004    | -0.002 (3/8)             |
+
+  mean adaptive - static over tariffs: -0.004.
+  Why so little? In the example run the bottleneck was 'wasted_solar' in 56/58 steps: the
+  symptom signal barely changes, so there is little to adapt TO, and UCB still pays to explore
+  every branch for that one bottleneck. RSIFlow's premise -- bottlenecks that EVOLVE -- is weak on
+  this task; the static recipe already spreads effort across the useful actions.
+
+[evidence saved to results\lab10_13.json]
+[runtime 9.1s]

@@ -1,0 +1,77 @@
+==============================================================================
+LAB 10.16 | Environments for RSI: EaaS, terminal, self-play
+source: RSIGym arXiv:2610.10310, Terminal-RSI, R2Orch
+==============================================================================
+
+------------------------------------------------------------------------------
+1a. Sandbox: the agent submits SOURCE TEXT; only the rule grammar is accepted
+------------------------------------------------------------------------------
+| submission       | sandbox  | result                                    |
+|------------------|----------|-------------------------------------------|
+| expert policy    | accepted | capture 0.932                             |
+| import attempt   | REJECTED | statement not allowed: 'import os'        |
+| attribute escape | REJECTED | condition not allowed: 'o.__class__ >= 0' |
+| loop             | REJECTED | statement not allowed: 'while True:'      |
+| unknown action   | REJECTED | unknown action 'SELL_TO_NEIGHBOUR'        |
+
+------------------------------------------------------------------------------
+1b. Permissions: agent vs auditor
+------------------------------------------------------------------------------
+| role    | split    | evaluate()              |
+|---------|----------|-------------------------|
+| agent   | steering | allowed (capture 0.932) |
+| agent   | heldout  | DENIED                  |
+| auditor | steering | allowed (capture 0.932) |
+| auditor | heldout  | allowed (capture 0.924) |
+
+------------------------------------------------------------------------------
+1c. Budget control: an improver is stopped by the meter, not by good manners
+------------------------------------------------------------------------------
+  after 16 evaluations: BudgetExceeded: budget of 576 day-sims exhausted (576 used)
+  best steering capture reached within budget: 0.789; service calls {'evaluate': 18, 'sandbox': 18}
+
+------------------------------------------------------------------------------
+2. RSIGym's three tracks through the metered service layer (6 seeds, 2880 day-sims)
+------------------------------------------------------------------------------
+| tariff        | track         | held-out capture |
+|---------------|---------------|------------------|
+| tou           | data track    | 0.879 +/- 0.075  |
+| tou           | harness track | 0.712 +/- 0.000  |
+| tou           | joint track   | 0.920 +/- 0.006  |
+| critical_peak | data track    | 0.946 +/- 0.016  |
+| critical_peak | harness track | 0.843 +/- 0.000  |
+| critical_peak | joint track   | 0.935 +/- 0.010  |
+| wholesale     | data track    | 0.795 +/- 0.015  |
+| wholesale     | harness track | 0.633 +/- 0.000  |
+| wholesale     | joint track   | 0.709 +/- 0.051  |
+
+  best track per tariff: tou: joint track, critical_peak: data track, wholesale: data track
+  RSIGym reports the joint track beating data-only and harness-only; check whether that holds here.
+
+------------------------------------------------------------------------------
+3. Terminal-style access (Terminal-RSI): write a file, run the CLI, parse JSON
+------------------------------------------------------------------------------
+  $ python -m gridwise.cli evaluate candidate_policy.py --split steering
+    exit=0 {"capture": 0.932462917185861, "solved": 47, "n": 48, "tariff": "tou", "split": "steering", "day_sims_used": 48}
+  $ python -m gridwise.cli evaluate candidate_policy.py --split heldout
+    exit=3 {"error": "BoundaryViolation: 'eaas:agent' tried to read the protected 'heldout' split"}
+
+------------------------------------------------------------------------------
+4. Self-play environment (R2Orch-style): the proposer picks days by learnability
+------------------------------------------------------------------------------
+  population of 16 programs on the 16 fit days; per-day solve rate:
+    0.19 0.12 0.00 0.12 0.19 0.12 0.12 0.00 0.00 0.00 0.19 0.06 0.94 0.94 0.12 0.19
+  learnability p(1-p) is highest for days [0, 4, 15, 10, 6] (rates [0.19, 0.19, 0.19, 0.19, 0.12]);
+  days every program solves (p=1) or none solves (p=0) teach nothing -> the proposer skips them.
+
+------------------------------------------------------------------------------
+5. When is each environment appropriate?
+------------------------------------------------------------------------------
+| environment      | interface                                    | good for                                  | limitation                                                 |
+|------------------|----------------------------------------------|-------------------------------------------|------------------------------------------------------------|
+| RSIGym (EaaS)    | typed services + shared budget + permissions | fair, metered comparisons; many improvers | the agent cannot do anything the services do not expose    |
+| Terminal-RSI     | shell + files + CLI                          | agents that write and run code freely     | needs an OS sandbox; budgets and splits are by convention  |
+| R2Orch self-play | a task proposer + the solver population      | curriculum discovery without labels       | learnability rewards can drift toward easy-but-noisy tasks |
+
+[evidence saved to results\lab10_16.json]
+[runtime 19.1s]

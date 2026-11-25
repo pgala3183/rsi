@@ -1,0 +1,49 @@
+==============================================================================
+LAB 10.17 | Analyse the October 2026 RSI metrics on real runs
+==============================================================================
+
+------------------------------------------------------------------------------
+1. RSI-Index (from lab 10.15)
+------------------------------------------------------------------------------
+  Budget RSI: 0.524, SO-RSI: 0.607, SwarmRSI: 0.732
+
+------------------------------------------------------------------------------
+2. Steering-split solve rate: is the search proxy faithful to held-out?
+------------------------------------------------------------------------------
+  180 evaluated nodes from 6 HGM searches
+  Spearman(steering capture, held-out capture)    = 0.944
+  Spearman(steering solve RATE, held-out capture) = 0.852
+  selected node: steering minus held-out = 0.037 +/- 0.024  (positive = winner's-curse optimism)
+
+------------------------------------------------------------------------------
+3. Recursive Learnability: train on the days with the most diverse outcomes?
+------------------------------------------------------------------------------
+| 12 training days chosen by | held-out capture after 80 evaluations |
+|----------------------------|---------------------------------------|
+| learnable (max p(1-p))     | 0.794 +/- 0.101                       |
+| hardest (lowest p)         | 0.877 +/- 0.035                       |
+| easiest (highest p)        | 0.739 +/- 0.077                       |
+| random 12 days             | 0.913 +/- 0.032                       |
+
+  Learnability picks days whose outcomes DIFFER across the population -- a narrow slice of day types.
+  Optimising on that slice alone transfers worse than a random sample: learnability is a good signal
+  for what to ADD to a curriculum, not a replacement for a representative one.
+
+------------------------------------------------------------------------------
+4. Swarm diversity: does it predict whether recombination still works?
+------------------------------------------------------------------------------
+  mean diversity by generation: 0.00 0.97 0.97 0.99 0.94 0.87 0.87 0.92 0.92 0.93 0.91
+  successful recombinations per run: [2, 5, 4, 6]
+
+------------------------------------------------------------------------------
+5. Summary: what each metric solves, when it is useful, its limits (with our numbers)
+------------------------------------------------------------------------------
+| metric                    | problem it solves                                              | useful when                                      | limitation                                                                                                     |
+|---------------------------|----------------------------------------------------------------|--------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| RSI-Index                 | compares improvement across benchmarks of different difficulty | reporting one number over a suite                | near-solved benchmarks dominate; hides absolute gains; 'ideal' must exist                                      |
+| steering-split solve rate | cheap proxy used for selection during search                   | when it ranks like held-out (Spearman 0.94 here) | the selected node is optimistic by +0.037; solve counts are coarser than means                                 |
+| Recursive Learnability    | chooses practice tasks that separate good from bad solvers     | self-play curricula without labels               | here a learnable-only curriculum scored 0.794 vs random 0.913: it is unrepresentative of the test distribution |
+| swarm diversity           | detects premature convergence of a swarm                       | deciding when to inject new hypotheses           | syntactic distance can hide behavioural sameness                                                               |
+
+[evidence saved to results\lab10_17.json]
+[runtime 5.5s]

@@ -1,0 +1,49 @@
+==============================================================================
+LAB 10.08 | Apply second-order diagnosis to a failing test
+==============================================================================
+
+------------------------------------------------------------------------------
+1. The failing test
+------------------------------------------------------------------------------
+  test_spike_dump(EXPERT_POLICY): FAIL -- 4.31 kWh exported in spike hours (need >= 6.0), fixture of 37 spike days
+
+------------------------------------------------------------------------------
+2. The developer's first-order debugging session (recorded)
+------------------------------------------------------------------------------
+| # | what changed                        | expected                     | what happened   | anomalies flagged    |
+|---|-------------------------------------|------------------------------|-----------------|----------------------|
+| 1 | lower spike threshold 0.50 -> 0.30  | more spike energy            | FAIL (4.31 kWh) | mismatch             |
+| 2 | lower spike threshold 0.30 -> 0.20  | more spike energy            | FAIL (4.31 kWh) | mismatch             |
+| 3 | raise it back to 0.50 (undo)        | fewer false dumps            | FAIL (4.31 kWh) | opposing             |
+| 4 | add 'discharge_max if price >= 1.0' | catch spikes by import price | FAIL (4.31 kWh) | recurrence, mismatch |
+| 5 | delete that rule again              | back to baseline             | FAIL (4.31 kWh) | opposing             |
+
+  Five patches, zero progress. Retrospectively the trace shows recurrence (the same lever pulled
+  repeatedly), opposing edits (raise / lower, add / delete) and an outcome that never moves as expected.
+
+------------------------------------------------------------------------------
+3. Probes
+------------------------------------------------------------------------------
+  recurrence -> sweep the lever itself:
+    thr=0.1: 4.31 kWh  thr=0.3: 4.31 kWh  thr=0.5: 4.31 kWh  thr=0.7: 4.31 kWh  thr=0.9: 2.92 kWh
+    best 4.31 kWh < 6.0 at every threshold -> the threshold is NOT the binding lever
+  mismatch -> expected the dump rule to fire in spike hours. WHEN does it fire?
+    first dump hour minus first truly-hot hour, per spike day: {-1: 37}
+    -> the rule fires exactly ONE HOUR EARLY on every spike day: the policy is reacting correctly
+       to observations that are wrong. The assumption 'features describe the current hour' is broken.
+  confirm -> cross-correlate the export_price feature with the raw export tariff at lags -2..+2:
+    lag -2: err 0.266  lag -1: err 0.169  lag +0: err 0.081  lag +1: err 0.000  lag +2: err 0.089
+    feature[t] == raw[t+1]  -> root cause is in the FEATURE PIPELINE, not in the policy
+
+------------------------------------------------------------------------------
+4. Fix the pipeline, keep the original policy
+------------------------------------------------------------------------------
+  test_spike_dump(EXPERT_POLICY) after rebuilding features: PASS (6.52 kWh)
+  steering capture of the unchanged policy: buggy pipeline 0.496 -> fixed pipeline 0.840
+
+  Lesson: five first-order patches could never pass this test. The second-order questions
+  ('is this the lever?', 'did it do what I expected, WHEN I expected?') moved the search from
+  the policy to the environment model -- the course's 'test setup wrong, not function'.
+
+[evidence saved to results\lab10_08.json]
+[runtime 0.5s]

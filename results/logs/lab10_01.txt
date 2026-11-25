@@ -1,0 +1,59 @@
+==============================================================================
+LAB 10.01 | Distinguish claim from evidence
+source: course demos in reference/course_demos (MIT)
+==============================================================================
+
+------------------------------------------------------------------------------
+A1. Re-run the SO-RSI demo comparison 300 times (20 attempts each)
+------------------------------------------------------------------------------
+| condition                   | naive success | SO-RSI success | gap   |
+|-----------------------------|---------------|----------------|-------|
+| diagnostics ON (as shipped) | 0.297         | 0.501          | 0.204 |
+| diagnostics OFF (ablation)  | 0.297         | 0.501          | 0.204 |
+
+The gap is identical with the diagnostics switched off. Where does it come from?
+  so_rsi_demo.py:203: outcome = "success" if random.random() < 0.3 else "failure"
+  so_rsi_demo.py:249: outcome = "success" if random.random() < 0.5 else "failure"
+  so_rsi_demo.py:300: expected = "success" if random.random() < 0.3 else None
+  so_rsi_demo.py:344: expected = "success" if random.random() < 0.3 else None
+-> the success probabilities are hard-coded (0.3 vs 0.5). Diagnostics never change the next fix
+   (see the comment 'In full implementation, this would adjust the fix strategy').
+
+------------------------------------------------------------------------------
+A2. Do the anomaly detectors detect what they claim?
+------------------------------------------------------------------------------
+  first-ever failure, empty history -> anomalies ['recurrence']
+  'increase lr' then 'decrease lr'   -> anomalies ['recurrence']  (opposing expected)
+-> monitor_trace() appends the trace BEFORE checking, so recurrence matches the trace with itself
+   (every failure is a 'recurrence') and opposing compares the edit with itself (never fires).
+
+------------------------------------------------------------------------------
+B1. Is the held-out score independent evidence, or generated from the steering score?
+------------------------------------------------------------------------------
+  corr(steering count, held-out count) over 500 synthetic edits = 0.920
+  generate_synthetic_edits():  held_out = clip(steering_count * 6 + noise)  -> the proxy is valid BY CONSTRUCTION
+
+------------------------------------------------------------------------------
+B2. Does selection still work if the diff features carry no information?
+------------------------------------------------------------------------------
+| condition         | held-out gain over random (solves/100) | P(gain > 0) |
+|-------------------|----------------------------------------|-------------|
+| as shipped        | 40.674                                 | 0.990       |
+| features shuffled | 8.369                                  | 0.655       |
+-> shuffling the diff features removes ~80% of the gain; what is left comes from parent_rate,
+   which the generator ALSO wires linearly into the outcome. The readout works because the data
+   generator makes outcomes a linear function of exactly the readout's inputs.
+
+  'HuxleyGodelSelector(' instantiated in main(): False
+  The '~88% cost reduction' is printed arithmetic (budget_rsi_demo.py:248-258), not a measured quantity.
+
+------------------------------------------------------------------------------
+What the demos DO establish
+------------------------------------------------------------------------------
+  * the code paths of each mechanism run end to end on a laptop
+  * NOT that the mechanism causes the improvement -- both headlines are built into the data generator.
+  This is why the rest of this repo re-builds the three methods on a task (GridWise) whose outcomes
+  come from a simulator, with an oracle, frozen splits, matched budgets and ablations.
+
+[evidence saved to results\lab10_01.json]
+[runtime 0.8s]

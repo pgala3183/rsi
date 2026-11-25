@@ -1,0 +1,174 @@
+{
+  "example_log": [
+    "campaign 1: leader chose ['peak', 'events'] | gains peak=+0.002, events=+0.136 | best=0.923 | unresolved=[]",
+    "campaign 2: leader chose ['solar', 'peak'] | gains solar=+0.015, peak=+0.000 | best=0.938 | unresolved=[]",
+    "campaign 3: leader chose ['solar', 'events'] | gains solar=+0.013, events=+0.000 | best=0.951 | unresolved=[]",
+    "campaign 4: leader chose ['solar', 'arbitrage'] | gains solar=+0.006, arbitrage=+0.002 | best=0.956 | unresolved=[]",
+    "campaign 5: leader chose ['solar', 'arbitrage'] | gains solar=+0.009 | best=0.965 | unresolved=[]"
+  ],
+  "memory": [
+    {
+      "campaign": 1,
+      "orientation": "peak",
+      "problem": "uncovered_peak",
+      "status": "supported",
+      "evidence": 0.0022
+    },
+    {
+      "campaign": 1,
+      "orientation": "events",
+      "problem": "uncovered_peak",
+      "status": "supported",
+      "evidence": 0.1356
+    },
+    {
+      "campaign": 2,
+      "orientation": "solar",
+      "problem": "wasted_solar",
+      "status": "supported",
+      "evidence": 0.0153
+    },
+    {
+      "campaign": 2,
+      "orientation": "peak",
+      "problem": "uncovered_peak",
+      "status": "unresolved",
+      "evidence": 0.0
+    },
+    {
+      "campaign": 3,
+      "orientation": "solar",
+      "problem": "wasted_solar",
+      "status": "supported",
+      "evidence": 0.0127
+    },
+    {
+      "campaign": 3,
+      "orientation": "events",
+      "problem": "uncovered_peak",
+      "status": "unresolved",
+      "evidence": 0.0
+    },
+    {
+      "campaign": 4,
+      "orientation": "solar",
+      "problem": "wasted_solar",
+      "status": "supported",
+      "evidence": 0.0056
+    },
+    {
+      "campaign": 4,
+      "orientation": "arbitrage",
+      "problem": "excess_grid_charge",
+      "status": "supported",
+      "evidence": 0.0016
+    },
+    {
+      "campaign": 5,
+      "orientation": "solar",
+      "problem": "wasted_solar",
+      "status": "supported",
+      "evidence": 0.0091
+    }
+  ],
+  "comparison": {
+    "tou": {
+      "conditional memory": [
+        0.9542786744510267,
+        0.9266744005915087,
+        0.9438233003805773,
+        0.9401028331845757,
+        0.946750714848547,
+        0.9054000923810037,
+        0.9474865429613547,
+        0.8678183712757485
+      ],
+      "unconditional sharing": [
+        0.9047509750341339,
+        0.8896614187857383,
+        0.9568517109295837,
+        0.9455312958796683,
+        0.9064640782841128,
+        0.8896233097704396,
+        0.9061108316980853,
+        0.8966674359752045
+      ],
+      "independent": [
+        0.9417060548120857,
+        0.9001588254366615,
+        0.9030352567059922,
+        0.9166072078299808,
+        0.8902082662737739,
+        0.928281374365525,
+        0.9144328622453288,
+        0.9088417301487397
+      ]
+    },
+    "critical_peak": {
+      "conditional memory": [
+        0.9426309292698544,
+        0.9449994741679358,
+        0.9377381812159412,
+        0.9551299385225817,
+        0.9251112144672518,
+        0.9368737184649386,
+        0.957121235794616,
+        0.935821845696476
+      ],
+      "unconditional sharing": [
+        0.9604239639683176,
+        0.9352706690917704,
+        0.9368737184649386,
+        0.9377381812159412,
+        0.935821845696476,
+        0.9377381812159412,
+        0.957121235794616,
+        0.9582237858350324
+      ],
+      "independent": [
+        0.9368737184649386,
+        0.9368737184649386,
+        0.9368737184649386,
+        0.9368737184649386,
+        0.9244013104710977,
+        0.9507503790498733,
+        0.9368737184649386,
+        0.9368737184649386
+      ]
+    },
+    "wholesale": {
+      "conditional memory": [
+        0.7655213952877452,
+        0.7279433989619888,
+        0.755375647362617,
+        0.7447180229931246,
+        0.7465194941680032,
+        0.7374430796099561,
+        0.7020171020803683,
+        0.7109511443771416
+      ],
+      "unconditional sharing": [
+        0.800256113705712,
+        0.8114626673583308,
+        0.7433772081950383,
+        0.7332412493596914,
+        0.7536853377104547,
+        0.7685677100367667,
+        0.8179176968170289,
+        0.7367253704717625
+      ],
+      "independent": [
+        0.7297023622206226,
+        0.6869880170535231,
+        0.794454688637882,
+        0.6803247216107177,
+        0.7964789190553059,
+        0.6993488573616529,
+        0.6995495569996676,
+        0.7452678549635848
+      ]
+    }
+  },
+  "runtime_seconds": 7.2,
+  "fast_mode": false
+}

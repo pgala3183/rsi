@@ -1,0 +1,62 @@
+==============================================================================
+LAB 10.02 | Audit the evaluation protocol before trusting any result
+==============================================================================
+
+------------------------------------------------------------------------------
+1. Partitions: 16 fit / 48 steering / 100 held-out days, disjoint
+------------------------------------------------------------------------------
+  sizes {'fit': 16, 'steering': 48, 'heldout': 100}, overlapping days 0
+
+------------------------------------------------------------------------------
+2. The held-out boundary is enforced, not just promised
+------------------------------------------------------------------------------
+  BoundaryViolation: 'sneaky improver' tried to read the protected 'heldout' split
+  a full Budget RSI run made 77 split accesses; held-out reads during search: 0
+
+------------------------------------------------------------------------------
+3. The cost ledger counts what was simulated
+------------------------------------------------------------------------------
+  ledger after one Budget RSI run: {'fit': 1152, 'steering': 192}
+
+------------------------------------------------------------------------------
+4. Determinism: same seed -> same result
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+5. The readable program IS the evaluated program
+------------------------------------------------------------------------------
+  exec'd rendered source vs vectorised interpreter on 32 programs x 100 states: 0 mismatches
+
+------------------------------------------------------------------------------
+6. Is the oracle really an upper bound? (per day, every tariff)
+------------------------------------------------------------------------------
+| tariff        | no-battery $/day | oracle $/day | seed solved frac |
+|---------------|------------------|--------------|------------------|
+| tou           | 7.824            | 1.624        | 0.630            |
+| vpp_events    | 4.805            | 0.916        | 0.690            |
+| critical_peak | 7.507            | 1.589        | 0.730            |
+| wholesale     | 5.593            | -1.557       | 0.000            |
+| solar_glut    | 8.389            | 1.645        | 0.700            |
+  policy-days where a continuous policy beat the DP oracle: 139 of 1500
+  worst excess, in units of (one 0.25 kWh SoC step x that day's peak price): 1.01
+  FINDING: the oracle is optimal on a 0.25 kWh grid, not in continuous space. A policy can beat it
+  by about one grid step of energy at the day's best price. capture() therefore clips at 1.0, and
+  the 'ideal' in RSI-Index is 'oracle-level', not a proven optimum.
+
+------------------------------------------------------------------------------
+Audit summary
+------------------------------------------------------------------------------
+| check                                                 | result | detail                                      |
+|-------------------------------------------------------|--------|---------------------------------------------|
+| split sizes match the paper (16/48/100)               | PASS   | {'fit': 16, 'steering': 48, 'heldout': 100} |
+| splits are disjoint                                   | PASS   | 0 shared days                               |
+| improver cannot read held-out                         | PASS   | BoundaryViolation raised                    |
+| search never touched held-out                         | PASS   | 0 reads                                     |
+| fit-split cost = 16 x distinct programs labelled      | PASS   | 1152 vs 1152                                |
+| steering cost = 48 x archive nodes                    | PASS   | 192 vs 192                                  |
+| re-running a seed reproduces the program and score    | PASS   | score 0.8897 vs 0.8897                      |
+| source == interpreter                                 | PASS   | 0 mismatches                                |
+| oracle slack <= 1.5 SoC steps at the day's peak price | PASS   | worst 1.01 steps                            |
+
+[evidence saved to results\lab10_02.json]
+[runtime 1.7s]

@@ -1,0 +1,171 @@
+{
+  "example_log": [
+    "H-step: symptoms ['wasted_solar', 'uncovered_peak'] -> curriculum=20 days, guards=[none] (validation 0.847)",
+    "P-step: policy now 1 rules, curriculum capture 0.877",
+    "H-step: symptoms ['wasted_solar', 'excess_grid_charge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.947)",
+    "P-step: policy now 1 rules, curriculum capture 0.877",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)",
+    "P-step: policy now 1 rules, curriculum capture 0.877",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)",
+    "P-step: policy now 1 rules, curriculum capture 0.874",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)",
+    "P-step: policy now 1 rules, curriculum capture 0.876",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)",
+    "P-step: policy now 2 rules, curriculum capture 0.884",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.943)",
+    "P-step: policy now 2 rules, curriculum capture 0.877",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.943)",
+    "P-step: policy now 3 rules, curriculum capture 0.880",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.943)",
+    "P-step: policy now 3 rules, curriculum capture 0.892",
+    "H-step: symptoms ['wasted_solar', 'excess_grid_charge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.920)",
+    "P-step: policy now 3 rules, curriculum capture 0.868",
+    "H-step: symptoms ['wasted_solar', 'excess_grid_charge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.920)",
+    "P-step: policy now 2 rules, curriculum capture 0.869",
+    "H-step: symptoms ['wasted_solar', 'excess_grid_charge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.920)",
+    "P-step: policy now 5 rules, curriculum capture 0.909",
+    "H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.943)",
+    "P-step: policy now 5 rules, curriculum capture 0.881"
+  ],
+  "harness": "curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0]",
+  "comparison": {
+    "tou": {
+      "root": 0.7121535667658883,
+      "policy_only": [
+        0.8590161897293314,
+        0.8588314984710962,
+        0.9429139608443697,
+        0.8419821879681973,
+        0.9512544859291254,
+        0.9150079835068725,
+        0.8388794917074684,
+        0.8601936927012561
+      ],
+      "harness_only": [
+        0.7121535667658883,
+        0.7121535667658883,
+        0.7121535667658883,
+        0.7121535667658883,
+        0.7121535667658883,
+        0.7121535667658883,
+        0.7121535667658883,
+        0.7121535667658883
+      ],
+      "joint": [
+        0.9197171764878381,
+        0.9091193491056581,
+        0.9194309593010918,
+        0.919961549673707,
+        0.9244822741499076,
+        0.9305632107577266,
+        0.8813292102552142,
+        0.9203876979804889
+      ],
+      "synergy": 0.032113992106739375
+    },
+    "critical_peak": {
+      "root": 0.7904486024998226,
+      "policy_only": [
+        0.9368737184649386,
+        0.9368737184649386,
+        0.9484247757795395,
+        0.9391004047284203,
+        0.9465197546882707,
+        0.9679213683774548,
+        0.9684454654260256,
+        0.9694850935074345
+      ],
+      "harness_only": [
+        0.8434472105196456,
+        0.8434472105196456,
+        0.8434472105196456,
+        0.8434472105196456,
+        0.8434472105196456,
+        0.8434472105196456,
+        0.8434472105196456,
+        0.8434472105196456
+      ],
+      "joint": [
+        0.9401131369966543,
+        0.9401131369966543,
+        0.9401131369966543,
+        0.9170204744886549,
+        0.9278235082473384,
+        0.942814165165528,
+        0.9401131369966542,
+        0.9401131369966543
+      ],
+      "synergy": -0.06867616633885165
+    },
+    "wholesale": {
+      "root": 0.500846212187869,
+      "policy_only": [
+        0.7391594687816793,
+        0.7629608026385111,
+        0.7473207973413336,
+        0.8165042011856493,
+        0.7991358644461548,
+        0.8027242639638743,
+        0.7790786493325093,
+        0.7911022086206776
+      ],
+      "harness_only": [
+        0.6333454128615054,
+        0.6333454128615054,
+        0.6333454128615054,
+        0.6333454128615054,
+        0.6333454128615054,
+        0.6333454128615054,
+        0.6333454128615054,
+        0.6333454128615054
+      ],
+      "joint": [
+        0.7277298072452035,
+        0.7373097937552593,
+        0.710007918236367,
+        0.6083137516376798,
+        0.7510481454336339,
+        0.7353587058954489,
+        0.7059813710641801,
+        0.7358640189988488
+      ],
+      "synergy": -0.19829579367910732
+    },
+    "vpp_events": {
+      "root": 0.8412446840114078,
+      "policy_only": [
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122
+      ],
+      "harness_only": [
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122
+      ],
+      "joint": [
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.9586869410297143,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122,
+        0.961745889069122
+      ],
+      "synergy": -0.12088357356264012
+    }
+  },
+  "runtime_seconds": 29.78,
+  "fast_mode": false
+}

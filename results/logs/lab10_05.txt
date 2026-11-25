@@ -1,0 +1,53 @@
+==============================================================================
+LAB 10.05 | Extend Budget RSI to task-aware edits, new tariffs and matched cost
+source: arXiv:2610.29121
+==============================================================================
+
+------------------------------------------------------------------------------
+A. Domain coordinates (computed from the diff text only, still no simulation)
+------------------------------------------------------------------------------
+  new coordinates: adds_discharge_logic, adds_charge_logic, touches_price_logic, touches_soc_guard, touches_solar_logic, edit_priority
+  example diff -> adds_discharge_logic=1, adds_charge_logic=1, touches_price_logic=1, touches_soc_guard=1, touches_solar_logic=0, edit_priority=0.5
+| features    | readout R^2 | held-out capture |
+|-------------|-------------|------------------|
+| diff        | 0.390       | 0.817 +/- 0.074  |
+| diff+domain | 0.470       | 0.847 +/- 0.062  |
+  top coefficients with domain features: constants_changed +0.24, touches_solar_logic +0.15, conds_delta -0.15, edit_priority -0.06, parent_rate -0.05
+
+------------------------------------------------------------------------------
+B. Transfer: a readout frozen on TOU, used on other tariffs (no recalibration)
+------------------------------------------------------------------------------
+| target tariff | selector                     | held-out capture |
+|---------------|------------------------------|------------------|
+| critical_peak | frozen TOU readout           | 0.823 +/- 0.059  |
+| critical_peak | readout calibrated on target | 0.835 +/- 0.066  |
+| critical_peak | HGM (no readout)             | 0.790 +/- 0.000  |
+| critical_peak | root                         | 0.790 +/- 0.000  |
+| solar_glut    | frozen TOU readout           | 0.878 +/- 0.089  |
+| solar_glut    | readout calibrated on target | 0.878 +/- 0.089  |
+| solar_glut    | HGM (no readout)             | 0.850 +/- 0.090  |
+| solar_glut    | root                         | 0.779 +/- 0.000  |
+| wholesale     | frozen TOU readout           | 0.569 +/- 0.070  |
+| wholesale     | readout calibrated on target | 0.573 +/- 0.068  |
+| wholesale     | HGM (no readout)             | 0.557 +/- 0.062  |
+| wholesale     | root                         | 0.501 +/- 0.000  |
+
+------------------------------------------------------------------------------
+C. Matched cost: Budget RSI vs just searching more (day-simulations per run, calibration included)
+------------------------------------------------------------------------------
+| method                                     | day-sims / run | held-out capture |
+|--------------------------------------------|----------------|------------------|
+| Budget RSI, calibrated per run             | 1455           | 0.817 +/- 0.074  |
+| calibration-best edit (no search)          | 1263           | 0.887 +/- 0.030  |
+| HGM search, same total budget (~30 nodes)  | 1500           | 0.863 +/- 0.061  |
+| Budget RSI, readout amortised over 12 runs | 296            | 0.833 +/- 0.069  |
+| HGM search, amortised budget               | 336            | 0.838 +/- 0.074  |
+
+  Honest bottom line for the Budget RSI group on GridWise:
+  * at the paper's tiny search budget (4 nodes) the readout beats HGM / parent-rate / random (lab 10.03)
+  * counting the calibration bill, spending the same day-sims on plain HGM search is as good or
+    better; amortising one calibration over many runs closes the cost gap without overtaking HGM
+  * task-aware diff coordinates (A) and transfer across tariffs (B) are where the readout earns its keep
+
+[evidence saved to results\lab10_05.json]
+[runtime 15.7s]

@@ -1,0 +1,76 @@
+{
+  "entries": [
+    {
+      "anomaly": "mismatch",
+      "slot": "hold",
+      "probe": "attribution",
+      "finding": "cost rose most at hour 20 (+$6.86 over 48 days): inconclusive",
+      "at": 3
+    },
+    {
+      "anomaly": "mismatch",
+      "slot": "absorb",
+      "probe": "attribution",
+      "finding": "cost rose most at hour 17 (+$0.44 over 48 days): inconclusive",
+      "at": 6
+    },
+    {
+      "anomaly": "recurrence",
+      "slot": "absorb",
+      "probe": "lever",
+      "finding": "no lever found (shadowed 0%, empty 1%): ban this patch",
+      "at": 9
+    },
+    {
+      "anomaly": "recurrence",
+      "slot": "hold",
+      "probe": "lever",
+      "finding": "no lever found (shadowed 0%, empty 0%): ban this patch",
+      "at": 11
+    },
+    {
+      "anomaly": "mismatch",
+      "slot": "hold",
+      "probe": "attribution",
+      "finding": "cost rose most at hour 20 (+$6.86 over 48 days): inconclusive",
+      "at": 11
+    },
+    {
+      "anomaly": "mismatch",
+      "slot": "charge",
+      "probe": "attribution",
+      "finding": "cost rose most at hour 1 (+$31.52 over 48 days): grid charging filled the battery before free solar arrived",
+      "at": 12
+    },
+    {
+      "anomaly": "recurrence",
+      "slot": "charge",
+      "probe": "lever",
+      "finding": "no lever found (shadowed 0%, empty 0%): ban this patch",
+      "at": 15
+    },
+    {
+      "anomaly": "recurrence",
+      "slot": "peak",
+      "probe": "lever",
+      "finding": "no lever found (shadowed 5%, empty 0%): ban this patch",
+      "at": 20
+    },
+    {
+      "anomaly": "recurrence",
+      "slot": "spike",
+      "probe": "lever",
+      "finding": "no lever found (shadowed 0%, empty 25%): ban this patch",
+      "at": 21
+    }
+  ],
+  "guards": {
+    "charge": [
+      "surplus_left_fc",
+      "<=",
+      4.0
+    ]
+  },
+  "fine_steps": {},
+  "remap": {}
+}

@@ -1,0 +1,35 @@
+==============================================================================
+LAB 10.12 | Compare workflow adaptation: RSIFlow vs Self-HPO
+source: arXiv:2610.21791 vs arXiv:2610.22791
+==============================================================================
+
+------------------------------------------------------------------------------
+1. What each method adapts
+------------------------------------------------------------------------------
+| aspect            | RSIFlow                                                 | Self-HPO                                             |
+|-------------------|---------------------------------------------------------|------------------------------------------------------|
+| changed object    | the routing of improvement actions (+ the graph itself) | harness (curriculum, guards) AND policy              |
+| feedback          | credit per (bottleneck, branch)                         | the policy's own failure symptoms on validation days |
+| iteration         | continuous: route -> evaluate -> credit                 | alternating H-step / P-step                          |
+| deployed artefact | a policy program                                        | a policy program + a runtime wrapper                 |
+
+------------------------------------------------------------------------------
+2. Same budget, same tariffs (8 seeds, held-out capture)
+------------------------------------------------------------------------------
+| tariff        | RSIFlow         | Self-HPO        | RSIFlow graph edits / run | Self-HPO guards kept / run |
+|---------------|-----------------|-----------------|---------------------------|----------------------------|
+| tou           | 0.888 +/- 0.029 | 0.916 +/- 0.015 | 1.0                       | 1.1                        |
+| critical_peak | 0.934 +/- 0.005 | 0.936 +/- 0.009 | 1.0                       | 1.9                        |
+| wholesale     | 0.756 +/- 0.047 | 0.714 +/- 0.045 | 0.5                       | 3.2                        |
+| vpp_events    | 0.962 +/- 0.000 | 0.961 +/- 0.001 | 1.4                       | 1.1                        |
+
+------------------------------------------------------------------------------
+3. When is each preferable?
+------------------------------------------------------------------------------
+| method   | preferable when                                                                    | weak when                                                                                                      |
+|----------|------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| RSIFlow  | the bottleneck shifts over time and different bottlenecks need different actions   | the bottleneck is stable (as on most GridWise tariffs) -> routing reduces to round-robin plus exploration cost |
+| Self-HPO | failures are fixable by wrapping the policy (a missing guard, a skewed curriculum) | few validation days -> guards overfit; you must ship and maintain the wrapper too                              |
+
+[evidence saved to results\lab10_12.json]
+[runtime 15.4s]

@@ -1,0 +1,31 @@
+{
+  "so_rsi_demo": {
+    "naive_on": 0.2975,
+    "sorsi_on": 0.5013333333333333,
+    "naive_off": 0.2975,
+    "sorsi_off": 0.5013333333333333,
+    "recurrence_on_first_failure": [
+      "recurrence"
+    ],
+    "opposing_on_increase_then_decrease": [
+      "recurrence"
+    ]
+  },
+  "budget_rsi_demo": {
+    "corr_steering_heldout": 0.9202303990067106,
+    "selection": [
+      [
+        "as shipped",
+        40.67375,
+        0.99
+      ],
+      [
+        "features shuffled",
+        8.36875,
+        0.655
+      ]
+    ]
+  },
+  "runtime_seconds": 0.76,
+  "fast_mode": false
+}

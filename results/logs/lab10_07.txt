@@ -1,0 +1,65 @@
+==============================================================================
+LAB 10.07 | Analyse diagnostic probes
+source: arXiv:2610.05701
+==============================================================================
+
+------------------------------------------------------------------------------
+1. How often each anomaly fired (SO-RSI's own first-order attempts)
+------------------------------------------------------------------------------
+| anomaly             | count |
+|---------------------|-------|
+| mismatch            | 91    |
+| recurrence          | 78    |
+| opposing            | 30    |
+| two or more at once | 40    |
+
+------------------------------------------------------------------------------
+2. What each probe concluded
+------------------------------------------------------------------------------
+| anomaly    | probe: finding                           | count |
+|------------|------------------------------------------|-------|
+| mismatch   | attribution: inconclusive                | 29    |
+| mismatch   | attribution: grid charge displaced solar | 16    |
+| mismatch   | attribution: blocks absorbing            | 2     |
+| recurrence | lever: no lever found                    | 64    |
+| recurrence | sweep: IS a lever                        | 7     |
+| opposing   | split: no conflict                       | 7     |
+| opposing   | split: conflicting constraints           | 4     |
+
+  inconclusive / negative findings: 100/129 (78%).
+  Negative findings are still recorded: they ban an exhausted patch, which is what stops recurrence.
+
+------------------------------------------------------------------------------
+3. Did the structural edit each probe recommended survive evaluation?
+------------------------------------------------------------------------------
+| anomaly    | interventions tried | accepted | acceptance | total capture gained |
+|------------|---------------------|----------|------------|----------------------|
+| mismatch   | 18                  | 16       | 89%        | 0.949                |
+| opposing   | 4                   | 0        | 0%         | 0.000                |
+| recurrence | 7                   | 7        | 100%       | 0.022                |
+
+------------------------------------------------------------------------------
+4. Recommendation table (the lab's expected output)
+------------------------------------------------------------------------------
+| anomaly    | probe                                                                  | why it addresses the root cause                                | limitation                                 |
+|------------|------------------------------------------------------------------------|----------------------------------------------------------------|--------------------------------------------|
+| recurrence | sweep the threshold; if no value helps, replay the trace (lever probe) | stops retrying a no-op; reveals shadowed rules / empty battery | costs 6-10 evaluations                     |
+| opposing   | evaluate +step and -step per day; split days on day-level context      | turns a tug-of-war into two context-specific rules             | only helps if the days really disagree     |
+| mismatch   | attribute the cost change to hours; check SoC / exports there          | adds the missing guard (e.g. no grid charge on sunny days)     | inconclusive when the cost moves diffusely |
+
+------------------------------------------------------------------------------
+5. The same detector run post-hoc on Naive RSI's traces (nobody acts on it)
+------------------------------------------------------------------------------
+| naive trace statistic | mean per run |
+|-----------------------|--------------|
+| recurrence            | 63.9         |
+| opposing              | 4.9          |
+| mismatch              | 60.6         |
+| longest_zero_progress | 78.8         |
+| attempts              | 99.0         |
+| accepted              | 2.5          |
+
+  share of SO-RSI's day-sims spent on probes: 64% (the rest went to the first-order loop)
+
+[evidence saved to results\lab10_07.json]
+[runtime 2.4s]

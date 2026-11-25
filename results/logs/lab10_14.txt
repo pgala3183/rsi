@@ -1,0 +1,58 @@
+==============================================================================
+LAB 10.14 | Self-HPO: alternate harness and policy optimisation
+source: arXiv:2610.22791
+==============================================================================
+
+------------------------------------------------------------------------------
+1. One joint run (TOU, seed 0): the alternation log
+------------------------------------------------------------------------------
+  H-step: symptoms ['wasted_solar', 'uncovered_peak'] -> curriculum=20 days, guards=[none] (validation 0.847)
+  P-step: policy now 1 rules, curriculum capture 0.877
+  H-step: symptoms ['wasted_solar', 'excess_grid_charge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.947)
+  P-step: policy now 1 rules, curriculum capture 0.877
+  H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)
+  P-step: policy now 1 rules, curriculum capture 0.877
+  H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)
+  P-step: policy now 1 rules, curriculum capture 0.874
+  H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)
+  P-step: policy now 1 rules, curriculum capture 0.876
+  H-step: symptoms ['wasted_solar', 'early_discharge'] -> curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0] (validation 0.934)
+  P-step: policy now 2 rules, curriculum capture 0.884
+  ... 26 steps
+  final policy (runs inside the harness):
+    def policy(o):
+        if o.peak_need_fc >= 5.00 and o.price_rank <= 0.10:
+            return CHARGE_HALF
+        if o.price <= 0.12:
+            return CHARGE_MAX
+        if o.export_price >= 0.60:
+            return DISCHARGE_MAX
+        if o.peak_need_fc >= 9.00 and o.price_rank <= 0.35 and o.soc <= 0.75:
+            return CHARGE_HALF
+        if o.peak_need_fc >= 9.50 and o.price_rank <= 0.20:
+            return IDLE
+        return SELF_CONSUME
+    
+  final harness: curriculum=20 days, guards=[no_grid_charge_if_sunny>=6.0]
+    guard no_grid_charge_if_sunny>=6.0: if day_surplus_fc >= 6.0 -> override
+  held-out (policy + harness) Score(capture=0.920, solved=89/100)
+
+------------------------------------------------------------------------------
+2. Policy-only vs harness-only vs joint (8 seeds, same budget)
+------------------------------------------------------------------------------
+| tariff        | root  | policy-only     | harness-only    | joint           | synergy = joint gain - (P + H gains) |
+|---------------|-------|-----------------|-----------------|-----------------|--------------------------------------|
+| tou           | 0.712 | 0.884 +/- 0.046 | 0.712 +/- 0.000 | 0.916 +/- 0.015 | +0.032                               |
+| critical_peak | 0.790 | 0.952 +/- 0.015 | 0.843 +/- 0.000 | 0.936 +/- 0.009 | -0.069                               |
+| wholesale     | 0.501 | 0.780 +/- 0.028 | 0.633 +/- 0.000 | 0.714 +/- 0.045 | -0.198                               |
+| vpp_events    | 0.841 | 0.962 +/- 0.000 | 0.962 +/- 0.000 | 0.961 +/- 0.001 | -0.121                               |
+
+  Paper: 57.8% -> 64.8% resolve rate; joint gain > sum of individual gains.
+  Here: synergy > 0 on 1/4 tariffs; joint is the best arm on 1/4.
+  harness-only gain per tariff: tou +0.000, critical_peak +0.053, wholesale +0.132, vpp_events +0.121
+  Where one guard alone already fixes the main failure (e.g. a VPP event rule), joint has nothing
+  left to add and the additive 'synergy' baseline double-counts the same fix -> large negative synergy.
+  Guards are chosen on only 16 validation days, so they can also overfit: judge by the held-out columns.
+
+[evidence saved to results\lab10_14.json]
+[runtime 29.8s]

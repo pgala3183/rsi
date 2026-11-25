@@ -1,0 +1,110 @@
+==============================================================================
+LAB 10.06 | Run SO-RSI: diagnose before patching
+source: arXiv:2610.05701
+==============================================================================
+
+------------------------------------------------------------------------------
+1. What the first-order loop sees: oracle-relative symptoms of the starting program
+------------------------------------------------------------------------------
+  seed steering Score(capture=0.787, solved=30/48)
+  Symptoms(uncovered_peak=74.0, wasted_solar=42.8, early_discharge=32.9, missed_grid_charge=0.0, excess_grid_charge=0.0)   ($-weighted mismatch vs the oracle, summed over 48 days)
+
+------------------------------------------------------------------------------
+2. Naive RSI, first 15 attempts (TOU, seed 0)
+------------------------------------------------------------------------------
+  [  0] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  1] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  2] wasted_solar       -> create hold      dir=+1  ACCEPT dScore=+0.0813 dSymptom=+15.6
+  [  3] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0454 dSymptom=-5.7
+  [  4] uncovered_peak     -> create spike     dir=-1  ACCEPT dScore=+0.0022 dSymptom=+5.1
+  [  5] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  6] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+  [  7] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  8] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+  [  9] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+  [ 10] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0689 dSymptom=-13.0
+  [ 11] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+  [ 12] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0689 dSymptom=-13.0
+  [ 13] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0235 dSymptom=-5.0
+  [ 14] missed_grid_charge -> create charge    dir=+1  reject dScore=-0.0396 dSymptom=-1.2
+  ... 99 attempts, 2 accepted
+
+------------------------------------------------------------------------------
+3. SO-RSI, same seed and budget (full trace)
+------------------------------------------------------------------------------
+  [  0] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  1] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  2] wasted_solar       -> create hold      dir=+1  ACCEPT dScore=+0.0813 dSymptom=+15.6
+  [  3] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0454 dSymptom=-5.7
+        !! anomaly=mismatch on slot=hold
+        ?? attribution probe: cost rose most at hour 20 (+$6.86 over 48 days): inconclusive
+  [  4] uncovered_peak     -> create spike     dir=-1  ACCEPT dScore=+0.0022 dSymptom=+5.1
+  [  5] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  6] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+        !! anomaly=mismatch on slot=absorb
+        ?? attribution probe: cost rose most at hour 17 (+$0.44 over 48 days): inconclusive
+  [  7] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [  8] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+  [  9] wasted_solar       -> create absorb    dir=-1  reject dScore=-0.0017 dSymptom=+0.3
+        !! anomaly=recurrence on slot=absorb
+        ?? sweep probe: absorb.surplus_fc is NOT a lever (no threshold beats the incumbent; spread=0.020)
+        ?? lever probe: no lever found (shadowed 0%, empty 1%): ban this patch
+  [ 10] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0689 dSymptom=-13.0
+  [ 11] wasted_solar       -> tweak  hold      dir=+1  reject dScore=-0.0454 dSymptom=-5.7
+        !! anomaly=recurrence on slot=hold
+        ?? sweep probe: hold.peak_ahead is NOT a lever (no threshold beats the incumbent; spread=0.081)
+        ?? lever probe: no lever found (shadowed 0%, empty 0%): ban this patch
+        !! anomaly=mismatch on slot=hold
+        ?? attribution probe: cost rose most at hour 20 (+$6.86 over 48 days): inconclusive
+  [ 12] missed_grid_charge -> create charge    dir=+1  reject dScore=-0.0396 dSymptom=-1.2
+        !! anomaly=mismatch on slot=charge
+        ?? attribution probe: cost rose most at hour 1 (+$31.52 over 48 days): grid charging filled the battery before free solar arrived
+        -> guard: keep the patch, add guard surplus_left_fc <= 4.0  dScore=+0.0686 ACCEPT
+  [ 14] missed_grid_charge -> tweak  charge    dir=+1  reject dScore=-0.0094 dSymptom=+0.0
+  [ 15] missed_grid_charge -> tweak  charge    dir=+1  reject dScore=-0.0094 dSymptom=+0.0
+        !! anomaly=recurrence on slot=charge
+        ?? sweep probe: charge.price_rank is NOT a lever (no threshold beats the incumbent; spread=0.826)
+        ?? lever probe: no lever found (shadowed 0%, empty 0%): ban this patch
+  [ 16] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [ 17] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [ 18] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [ 19] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+  [ 20] uncovered_peak     -> create peak      dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+        !! anomaly=recurrence on slot=peak
+        ?? sweep probe: peak.price_rank is NOT a lever (no threshold beats the incumbent; spread=0.644)
+        ?? lever probe: no lever found (shadowed 5%, empty 0%): ban this patch
+  [ 21] uncovered_peak     -> tweak  spike     dir=-1  reject dScore=+0.0000 dSymptom=+0.0
+        !! anomaly=recurrence on slot=spike
+        ?? sweep probe: spike.export_price is NOT a lever (no threshold beats the incumbent; spread=0.000)
+        ?? lever probe: no lever found (shadowed 0%, empty 25%): ban this patch
+
+  final program:
+    def policy(o):
+        if o.export_price >= 0.60:
+            return DISCHARGE_MAX
+        if o.price_rank <= 0.15 and o.soc <= 0.90 and o.surplus_left_fc <= 4.00:
+            return CHARGE_MAX
+        if o.peak_ahead >= 0.40 and o.price_rank <= 0.60 and o.surplus_fc <= 0.00:
+            return IDLE
+        return SELF_CONSUME
+    
+  inquiry memory saved: results/so_rsi_inquiry_memory_tou.json (9 entries)
+
+------------------------------------------------------------------------------
+4. Matched-budget comparison, 8 seeds x 5 tariffs (held-out capture on 100 unseen days)
+------------------------------------------------------------------------------
+| tariff        | root  | Naive RSI       | SO-RSI          | SO-RSI - naive | recurrences n/so | longest zero-progress n/so |
+|---------------|-------|-----------------|-----------------|----------------|------------------|----------------------------|
+| tou           | 0.712 | 0.804 +/- 0.000 | 0.926 +/- 0.000 | +0.122         | 60 / 6           | 89 / 9                     |
+| vpp_events    | 0.841 | 0.959 +/- 0.000 | 0.959 +/- 0.000 | +0.000         | 66 / 5           | 92 / 14                    |
+| critical_peak | 0.790 | 0.839 +/- 0.014 | 0.922 +/- 0.000 | +0.083         | 68 / 4           | 69 / 7                     |
+| wholesale     | 0.501 | 0.776 +/- 0.079 | 0.763 +/- 0.029 | -0.013         | 60 / 4           | 61 / 9                     |
+| solar_glut    | 0.779 | 0.863 +/- 0.090 | 0.822 +/- 0.081 | -0.041         | 64 / 4           | 82 / 15                    |
+
+  mean gain over tariffs: +0.030; SO-RSI better on 2/5, worse on 2/5
+  Paper (Lean 4 / Verus): +21.8 and +25.8 points held-out pass rate under matched 24-hour budgets.
+  Here: large gains where failures are STRUCTURAL (a patch is a no-op until another rule exists),
+  small losses where cheap first-order patches already work and probes just spend budget.
+
+[evidence saved to results\lab10_06.json]
+[runtime 6.3s]
